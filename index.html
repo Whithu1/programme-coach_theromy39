@@ -701,28 +701,54 @@
             window.history.replaceState({path: newURL}, '', newURL);
         }
 
-        function loadDataFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const rawData = urlParams.get('data');
-            if (rawData) {
-                try {
-                    const data = JSON.parse(rawData);
-                    for (const id in data) {
-                        const card = document.querySelector(`.card[data-id="${id}"]`);
-                        if (card) {
-                            card.querySelector('.val-sets').value = data[id].sets;
-                            card.querySelector('.val-reps').value = data[id].reps;
-                            card.querySelector('.val-weight').value = data[id].weight;
-                            const restInput = card.querySelector('.val-rest');
-                            restInput.value = data[id].rest;
-                            updateTimerDisplay(restInput);
-                        }
-                    }
-                } catch(e) {
-                    console.error("Erreur de chargement des données", e);
-                }
-            }
+function loadDataFromURL() {
+
+    const urlParams =
+        new URLSearchParams(window.location.search);
+
+    const rawData =
+        urlParams.get('data');
+
+    if (!rawData) return;
+
+    try {
+
+        const data =
+            JSON.parse(decodeURIComponent(rawData));
+
+        for (const id in data) {
+
+            const card =
+                document.querySelector(
+                    `.card[data-id="${id}"]`
+                );
+
+            if (!card) continue;
+
+            card.querySelector('.val-sets').value =
+                data[id].sets;
+
+            card.querySelector('.val-reps').value =
+                data[id].reps;
+
+            card.querySelector('.val-weight').value =
+                data[id].weight;
+
+            card.querySelector('.val-rest').value =
+                data[id].rest;
+
         }
+
+    } catch(e) {
+
+        console.error(
+            "Erreur chargement URL",
+            e
+        );
+
+    }
+
+}
 
         // Écouter les changements pour sauvegarder en temps réel dans l'URL
         document.addEventListener('input', function(e) {
@@ -826,7 +852,7 @@ function loadLocal() {
     }
 }
 
-        document.addEventListener('input', function(e) {
+       document.addEventListener('input', function(e) {
 
     if(e.target.tagName === 'INPUT') {
 
@@ -836,10 +862,11 @@ function loadLocal() {
     }
 
 });
-         window.addEventListener('DOMContentLoaded', function() {
+
+window.addEventListener('DOMContentLoaded', function() {
 
     const urlParams =
-    new URLSearchParams(window.location.search);
+        new URLSearchParams(window.location.search);
 
     if(urlParams.get('data')) {
 
@@ -849,7 +876,11 @@ function loadLocal() {
 
         loadLocal();
 
-    }       
+    }
+
+});
+
+console.log("VERSION TEST 123");
     </script>
 </body>
 </html>
