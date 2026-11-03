@@ -737,6 +737,11 @@ function loadDataFromURL() {
             card.querySelector('.val-rest').value =
                 data[id].rest;
 
+            card.querySelector('.timer-display').textContent =
+            "Repos : " +
+            data[id].rest +
+            "s";
+
         }
 
     } catch(e) {
