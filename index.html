@@ -836,7 +836,20 @@ function loadLocal() {
     }
 
 });
+         window.addEventListener('DOMContentLoaded', function() {
 
+    const urlParams =
+    new URLSearchParams(window.location.search);
+
+    if(urlParams.get('data')) {
+
+        loadDataFromURL();
+
+    } else {
+
+        loadLocal();
+
+    }       
     </script>
 </body>
 </html>
